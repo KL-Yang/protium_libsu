@@ -1,8 +1,3 @@
-#define SU_INT16    0
-#define SU_INT32    1
-#define SU_FLOAT    2
-#define SU_IBMF     3   //ibm float, unlikely
-
 static void su_int16to32(const int16_t *p1, int n, int32_t *p2)
 {
     for(int i=0; i<n; i++)
