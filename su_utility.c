@@ -5,6 +5,7 @@ const su_attr_t default_su_attr[]={
     {.name="fldr",   .db_type=PT_INT32, .ibyte=8,   .nbyte=4, .su_type=SU_INT32},
     {.name="tracf",  .db_type=PT_INT32, .ibyte=12,  .nbyte=4, .su_type=SU_INT32},
     {.name="offset", .db_type=PT_INT32, .ibyte=36,  .nbyte=4, .su_type=SU_INT32},
+    {.name="ns",     .db_type=PT_INT32, .ibyte=114, .nbyte=2, .su_type=SU_INT16},
     //for trace, nbyte is a place holder, always last item!
     {.name="trace",  .db_type=PT_FLOAT, .ibyte=240, .nbyte=0, .su_type=SU_FLOAT}
 };
