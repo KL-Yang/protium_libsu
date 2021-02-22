@@ -5,6 +5,8 @@ static int i_su_ninst(int fd, int length)
     lseek(fd, 0, SEEK_SET);
     if(file_len%length!=0) {
         printf("%s: file lenght is not consistent!\n", __func__);
+        printf("%s: file_len=%ld, length=%d\n", __func__, 
+            file_len, length);
         abort();
     }
     return file_len/length;
@@ -19,8 +21,11 @@ int su_open(SUID_t *id, const char *path, int flag)
     if(flag==SU_CREATE) {
         su->fid = open(path, O_CREAT);
     } else {
-        su->fid = open(path, 0);
-        int16_t nsdt[2];
+        if((su->fid=open(path, 0))<0) {
+            printf("%s: failed to open(%s)!\n", __func__, path);
+            abort();
+        }
+        int16_t nsdt[2]; 
         pread(su->fid, nsdt, 4, 114); 
         su->ns = nsdt[0];
         su->si = nsdt[1];

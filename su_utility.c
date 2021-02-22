@@ -72,11 +72,3 @@ static void su_typeconvert(const void *p1, int su_type, void *p2,
     pt_typeconvert(work, t1, p2, t2, nmemb);
     free(work);
 }
-
-static int64_t su_sizeof(int type, int length)
-{
-    size_t type_size=sizeof(int32_t);
-    if(type==SU_INT16)
-        type_size = sizeof(int16_t);
-    return type_size*length;
-}

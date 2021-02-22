@@ -20,14 +20,17 @@ int su_read(SUID_t id, const char *name, void *buff, int first,
         printf("%s: attribute %s not found!\n", __func__, name);
         abort();
     }
-    int size=attr->nbyte, length=1;
-    if(attr->ibyte==240) {    //must be trace!
-        size=sizeof(float);
+    su_attr_t curr; memcpy(&curr, attr, sizeof(su_attr_t));
+    int length=1;
+    if(curr.ibyte==240) {    //must be trace!
         length=su->ns;
+        curr.nbyte = su->ns*sizeof(float);
     }
-    void *work = calloc(nmemb, length*size);
-    su_readbytes(id, attr, work, first, nmemb); //and conver to db required format!!!
-    su_typeconvert(work, attr->su_type, buff, attr->db_type, nmemb*length);
+    void *work = calloc(nmemb, curr.nbyte);
+    su_readbytes(id, &curr, work, first, nmemb); //and conver to db required format!!!
+    for(int i=0; i<length; i++)
+        printf(" [%d] %f\n", i, ((float*)work)[i]);
+    su_typeconvert(work, curr.su_type, buff, curr.db_type, nmemb*length);
     free(work);
     return 0;
 }
