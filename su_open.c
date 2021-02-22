@@ -19,7 +19,8 @@ int su_open(SUID_t *id, const char *path, int flag)
     su->old_attr = default_su_attr;
     su->old_num = sizeof(default_su_attr)/sizeof(su_attr_t);
     if(flag==SU_CREATE) {
-        su->fid = open(path, O_CREAT);
+        su->fid = open(path, O_RDWR|O_CREAT,
+                S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
     } else {
         if((su->fid=open(path, 0))<0) {
             printf("%s: failed to open(%s)!\n", __func__, path);

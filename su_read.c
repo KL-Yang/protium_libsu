@@ -28,8 +28,8 @@ int su_read(SUID_t id, const char *name, void *buff, int first,
     }
     void *work = calloc(nmemb, curr.nbyte);
     su_readbytes(id, &curr, work, first, nmemb); //and conver to db required format!!!
-    for(int i=0; i<length; i++)
-        printf(" [%d] %f\n", i, ((float*)work)[i]);
+    //for(int i=0; i<length; i++)
+    //    printf(" [%d] %f\n", i, ((float*)work)[i]);
     su_type2db(work, curr.su_type, buff, curr.db_type, nmemb*length);
     free(work);
     return 0;

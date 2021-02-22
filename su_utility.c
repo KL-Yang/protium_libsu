@@ -83,6 +83,8 @@ static void su_type2su(const void *p1, int db_type, void *p2,
     int su_type, int nmemb)
 {
     //convert to int32 first
+    printf("%s: db_type=%d su_type=%d n=%d\n", __func__, 
+        db_type, su_type, nmemb);
     int t2 = PT_INT32;
     if(su_type==SU_FLOAT)
         t2 = PT_FLOAT;
@@ -90,5 +92,7 @@ static void su_type2su(const void *p1, int db_type, void *p2,
     pt_typeconvert(p1, db_type, work, t2, nmemb);
     if(su_type==SU_INT16)
         su_int32to16(work, nmemb, p2);
+    else
+        memcpy(p2, work, nmemb*sizeof(float));
     free(work);
 }

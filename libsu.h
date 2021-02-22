@@ -22,6 +22,8 @@
 #define SU_FLOAT    2
 #define SU_IBMF     3   //ibm float, unlikely
 
+#define MAX(a,b)    ((a>b)?(a):(b))
+
 typedef struct protium_suid_struct * SUID_t;
 
 //used to translate su header to attribute name
@@ -52,6 +54,7 @@ int su_ninst(SUID_t id);
 int su_nsamp(SUID_t id);
 int su_setnsamp(SUID_t id, int ns);
 int su_read(SUID_t id, const char *name, void *buff, int first, int nmemb);
+int su_write(SUID_t id, const char *name, void *buff, int first, int nmemb);
 int su_close(SUID_t id);
 
 #endif
