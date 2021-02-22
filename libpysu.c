@@ -14,13 +14,13 @@
 #include "su_write.c"
 
 static PyMethodDef pysuMethods[] = {
-    {"open",      pysu_open,      METH_VARARGS, "Open a seismic unix dataset."},
-/*    {"close",     pydb_close,     METH_VARARGS, "Close hdf5 dataset."},
-    {"addattr",   pydb_addattr,   METH_VARARGS, "db.addattr(id, name, dict)."},
+    {"open",      pysu_open,      METH_VARARGS, "Open a Seismic Unix dataset."},
+    {"close",     pysu_close,     METH_VARARGS, "Close SU dataset."},
+/*    {"addattr",   pydb_addattr,   METH_VARARGS, "db.addattr(id, name, dict)."},
     {"attrs",     pydb_attrs,     METH_VARARGS, "Get attributes names as list."},
     {"ninst",     pydb_ninst,     METH_VARARGS, "ninst = db.ninst(id)"},
     {"getattr",   pydb_getattr,   METH_VARARGS, "dict = db.getattr(id, name)"},
-    {"read",      pydb_read,      METH_VARARGS, "ndarry = db.read(id, name, first, num)"},
+    {"read",      pysu_read,      METH_VARARGS, "ndarry = db.read(id, name, first, num)"},
     {"write",     pydb_write,     METH_VARARGS, "db.write(id, name, ndarry, first, num)"}, */
     {NULL, NULL, 0, NULL} /* Sentinel */
 };
