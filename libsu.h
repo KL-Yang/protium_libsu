@@ -33,18 +33,22 @@ typedef struct {
     int     su_type;    //< su data type
 } su_attr_t;
 
-//const su_attr_t attr_NS = {.name="ns", .db_type=PT_INT32, .ibyte=114, .nbyte=2, .su_type=SU_INT16};
-
 struct protium_suid_struct {
-    int     fid;        //< su file id
-    int     ninst;
-    int     flag;
-    int     ns;
-    int     si;
-    int     skip;       //< trace skip
+    int         fid;        //< su file id
+    int         ninst;
+    int         flag;
+    int         ns;
+    int         si;
+    int         skip;       //< trace skip
+    int         new_num;
+    int         old_num;
+    const su_attr_t * new_attr;
+    const su_attr_t * old_attr;
 };
 typedef struct protium_suid_struct protium_suid_t;
 
 int su_open(SUID_t *id, const char *path, int flag);
+int su_ninst(SUID_t id);
+int su_read(SUID_t id, const char *name, void *buff, int first, int nmemb);
 
 #endif

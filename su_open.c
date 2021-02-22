@@ -1,7 +1,21 @@
+static int i_su_ninst(int fd, int length)
+{
+    off_t file_len;
+    file_len = lseek(fd, 0, SEEK_END);
+    lseek(fd, 0, SEEK_SET);
+    if(file_len%length!=0) {
+        printf("%s: file lenght is not consistent!\n", __func__);
+        abort();
+    }
+    return file_len/length;
+}
+
 int su_open(SUID_t *id, const char *path, int flag)
 {
     protium_suid_t *su = *id = calloc(1, sizeof(protium_suid_t));
     su->flag = flag;
+    su->old_attr = default_su_attr;
+    su->old_num = sizeof(default_su_attr)/sizeof(su_attr_t);
     if(flag==SU_CREATE) {
         su->fid = open(path, O_CREAT);
     } else {
@@ -11,7 +25,9 @@ int su_open(SUID_t *id, const char *path, int flag)
         su->ns = nsdt[0];
         su->si = nsdt[1];
         su->skip = 240+su->ns*sizeof(float);
-        printf("%s: ns=%d si=%d\n", __func__, su->ns, su->si);
+        su->ninst = i_su_ninst(su->fid, su->skip);
+        printf("%s: ninst=%d ns=%d si=%d\n", __func__, 
+            su->ninst, su->ns, su->si);
     }
     return 0;
 }
@@ -34,13 +50,11 @@ int su_settrace(SUID_t id, int ns, int si)
     }
     su->ns = ns;
     su->si = si;
+    su->skip = 240+ns*sizeof(float);
     return 0;
 }
 
-int su_ninst()
+int su_ninst(SUID_t id)
 {
-    return 0;
+    return ((protium_suid_t*)id)->ninst;
 }
-
-//translation table
-int su_settable();

@@ -31,7 +31,7 @@
             "srcs"      : ["libpysu.c"],
             "cflags"    : ["-g", "-std=gnu99", "-I${PROTIUM_HOME}/include"],
             "pkgs"      : ["glib-2.0", "python3"],
-            "libs"      : ["-L{PROTIUM_HOME} -lptcomm"]
+            "libs"      : ["-L${PROTIUM_HOME}/lib -lptcomm"]
         },
         "install" : {},
         "usage"   : {}
