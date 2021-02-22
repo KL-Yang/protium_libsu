@@ -6,7 +6,10 @@ static int su_writebytes(SUID_t id, const su_attr_t *attr,
     for(int i=0; i<ninst; i++) {
         int64_t f_offs=(first+i)*su->skip+attr->ibyte;
         int64_t b_offs=i*attr->nbyte;
-        pwrite(su->fid, buff+b_offs, attr->nbyte, f_offs);
+        if(pwrite(su->fid, buff+b_offs, attr->nbyte, f_offs)!=attr->nbyte) {
+            printf("%s: pwrite is not finished!\n", __func__);
+            abort();
+        }
     }
     return 0;
 }

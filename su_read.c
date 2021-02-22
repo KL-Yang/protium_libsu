@@ -6,7 +6,10 @@ int su_readbytes(SUID_t id, const su_attr_t *attr, void *buff,
     for(int i=0; i<ninst; i++) {
         int64_t f_offs=(first+i)*su->skip+attr->ibyte;
         int64_t b_offs=i*attr->nbyte;
-        pread(su->fid, buff+b_offs, attr->nbyte, f_offs);
+        if(pread(su->fid, buff+b_offs, attr->nbyte, f_offs)!=attr->nbyte) {
+            printf("%s: pread not finished!\n", __func__);
+            abort();
+        }
     }
     return 0;
 }

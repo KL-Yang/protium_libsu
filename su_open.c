@@ -25,7 +25,10 @@ int su_open(SUID_t *id, const char *path, int flag)
             abort();
         }
         int16_t nsdt; 
-        pread(su->fid, &nsdt, 2, 114); 
+        if(pread(su->fid, &nsdt, 2, 114)!=2) {
+            printf("%s: pread unfinished!\n", __func__);
+            abort();
+        }
         su->ns = nsdt;
         su->skip = 240+su->ns*sizeof(float);
         su->ninst = i_su_ninst(su->fid, su->skip);
