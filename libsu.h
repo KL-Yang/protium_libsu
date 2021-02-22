@@ -40,7 +40,6 @@ struct protium_suid_struct {
     int         ninst;
     int         flag;
     int         ns;
-    int         si;
     int         skip;       //< trace skip
     int         new_num;
     int         old_num;
