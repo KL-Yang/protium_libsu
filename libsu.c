@@ -1,6 +1,6 @@
 #define _GNU_SOURCE
 #include "libsu.h"
-#include "su_type.c"
+#include "su_utility.c"
 #include "su_table.c"   //translation table
 #include "su_read.c"
 #include "su_open.c"
