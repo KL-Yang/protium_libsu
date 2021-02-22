@@ -7,8 +7,6 @@ static int su_writebytes(SUID_t id, const su_attr_t *attr,
         int64_t f_offs=(first+i)*su->skip+attr->ibyte;
         int64_t b_offs=i*attr->nbyte;
         pwrite(su->fid, buff+b_offs, attr->nbyte, f_offs);
-        printf("%s: write %d at %ld\n", __func__, attr->nbyte,
-            f_offs);
     }
     return 0;
 }

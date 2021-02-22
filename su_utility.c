@@ -25,19 +25,14 @@ int su_translate(SUID_t id, const su_attr_t *attr, int nattr)
 //now linear search, should be hash search.
 static const su_attr_t *su_findattr(SUID_t id, const char *name)
 {
-    printf("%s: search for %s\n", __func__, name);
     protium_suid_t *su = id;
     if(su->new_num!=0 && su->new_attr!=NULL)
-        for(int i=0; i<su->new_num; i++) {
-            printf("new[%d] %s\n", i, su->new_attr[i].name);
+        for(int i=0; i<su->new_num; i++)
             if(strcasecmp(name, su->new_attr[i].name)==0)
                 return &su->new_attr[i];
-        }
-    for(int i=0; i<su->old_num; i++) {
-        printf("old[%d] %s\n", i, su->old_attr[i].name);
+    for(int i=0; i<su->old_num; i++)
         if(strcasecmp(name, su->old_attr[i].name)==0)
             return &su->old_attr[i];
-    }
     return NULL;
 }
 
@@ -54,8 +49,7 @@ static void su_int32to16(const int32_t *p1, int n, int16_t *p2)
 }
 
 //this is a none efficient simple convert, fix later.
-static void su_type2db(const void *p1, int su_type, void *p2, 
-    int t2, int nmemb)
+static void su_type2db(const void *p1, int su_type, void *p2, int t2, int nmemb)
 {
     void *work = calloc(nmemb, 4);
     int t1 = PT_INT32;  //default
@@ -82,10 +76,7 @@ static void su_type2db(const void *p1, int su_type, void *p2,
 static void su_type2su(const void *p1, int db_type, void *p2,
     int su_type, int nmemb)
 {
-    //convert to int32 first
-    printf("%s: db_type=%d su_type=%d n=%d\n", __func__, 
-        db_type, su_type, nmemb);
-    int t2 = PT_INT32;
+    int t2 = PT_INT32;  //convert to int32 first
     if(su_type==SU_FLOAT)
         t2 = PT_FLOAT;
     void *work = calloc(nmemb, sizeof(int32_t));
