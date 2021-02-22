@@ -19,13 +19,13 @@ int su_open(SUID_t *id, const char *path, int flag)
         su->fid = open(path, O_RDWR|O_CREAT,
                 S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
     } else {
-        if((su->fid=open(path, 0))<0) {
+        if((su->fid=open(path, O_RDWR))<0) {
             printf("%s: failed to open(%s)!\n", __func__, path);
             abort();
         }
-        int16_t nsdt[2]; 
-        pread(su->fid, nsdt, 4, 114); 
-        su->ns = nsdt[0];
+        int16_t nsdt; 
+        pread(su->fid, &nsdt, 2, 114); 
+        su->ns = nsdt;
         su->skip = 240+su->ns*sizeof(float);
         su->ninst = i_su_ninst(su->fid, su->skip);
     }
