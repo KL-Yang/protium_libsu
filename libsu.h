@@ -41,10 +41,8 @@ struct protium_suid_struct {
     int         flag;
     int         ns;
     int         skip;       //< trace skip
-    int         new_num;
-    int         old_num;
-    su_attr_t * new_attr;
-    const su_attr_t * old_attr;
+    su_attr_t * attr;
+    int         nattr;
 };
 typedef struct protium_suid_struct protium_suid_t;
 

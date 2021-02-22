@@ -13,8 +13,9 @@ int su_open(SUID_t *id, const char *path, int flag)
 {
     protium_suid_t *su = *id = calloc(1, sizeof(protium_suid_t));
     su->flag = flag;
-    su->old_attr = default_su_attr;
-    su->old_num = sizeof(default_su_attr)/sizeof(su_attr_t);
+    su->nattr = sizeof(default_su_attr)/sizeof(su_attr_t);
+    su->attr = calloc(su->nattr, sizeof(su_attr_t));
+    memcpy(su->attr, default_su_attr, sizeof(default_su_attr));
     if(flag==SU_CREATE) {
         su->fid = open(path, O_RDWR|O_CREAT,
                 S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);

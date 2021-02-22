@@ -15,10 +15,9 @@ const su_attr_t default_su_attr[]={
 int su_translate(SUID_t id, const su_attr_t *attr, int nattr)
 {
     protium_suid_t *su = id;
-    su_attr_t *buff = calloc(nattr, sizeof(su_attr_t));
-    memcpy(buff, attr, nattr*sizeof(su_attr_t));
-    su->new_attr = buff;
-    su->new_num = nattr;
+    su->attr = realloc(su->attr, nattr*sizeof(su_attr_t));
+    memcpy(su->attr, attr, nattr*sizeof(su_attr_t));
+    su->nattr = nattr;
     return 0;
 }
 
@@ -26,13 +25,9 @@ int su_translate(SUID_t id, const su_attr_t *attr, int nattr)
 static const su_attr_t *su_findattr(SUID_t id, const char *name)
 {
     protium_suid_t *su = id;
-    if(su->new_num!=0 && su->new_attr!=NULL)
-        for(int i=0; i<su->new_num; i++)
-            if(strcasecmp(name, su->new_attr[i].name)==0)
-                return &su->new_attr[i];
-    for(int i=0; i<su->old_num; i++)
-        if(strcasecmp(name, su->old_attr[i].name)==0)
-            return &su->old_attr[i];
+    for(int i=0; i<su->nattr; i++)
+        if(strcasecmp(name, su->attr[i].name)==0)
+            return &su->attr[i];
     return NULL;
 }
 
