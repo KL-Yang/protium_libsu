@@ -47,8 +47,14 @@ static void su_int16to32(const int16_t *p1, int n, int32_t *p2)
         p2[i]=p1[i];
 }
 
+static void su_int32to16(const int32_t *p1, int n, int16_t *p2)
+{
+    for(int i=0; i<n; i++)
+        p2[i]=p1[i];
+}
+
 //this is a none efficient simple convert, fix later.
-static void su_typeconvert(const void *p1, int su_type, void *p2, 
+static void su_type2db(const void *p1, int su_type, void *p2, 
     int t2, int nmemb)
 {
     void *work = calloc(nmemb, 4);
@@ -70,5 +76,19 @@ static void su_typeconvert(const void *p1, int su_type, void *p2,
             abort();
     }
     pt_typeconvert(work, t1, p2, t2, nmemb);
+    free(work);
+}
+
+static void su_type2su(const void *p1, int db_type, void *p2,
+    int su_type, int nmemb)
+{
+    //convert to int32 first
+    int t2 = PT_INT32;
+    if(su_type==SU_FLOAT)
+        t2 = PT_FLOAT;
+    void *work = calloc(nmemb, sizeof(int32_t));
+    pt_typeconvert(p1, db_type, work, t2, nmemb);
+    if(su_type==SU_INT16)
+        su_int32to16(work, nmemb, p2);
     free(work);
 }
