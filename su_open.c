@@ -54,3 +54,27 @@ int su_ninst(SUID_t id)
 {
     return ((protium_suid_t*)id)->ninst;
 }
+
+#ifdef LIBSU_PYTHON
+/**
+ * @brief Open a su file and return a handle!
+ *   su.open(name, flag)
+ * @param[in] flag SU_CREATE/SU_READONLY/SU_UPDATE
+ * */
+static PyObject * pysu_open(PyObject __attribute__((unused)) *self, PyObject *args)
+{
+    int flag;
+    const char *name;
+    if(!PyArg_ParseTuple(args, "si", &name, &flag))
+      return NULL;
+
+    SUID_t id;
+    PyObject *db;
+    if(su_open(&id, name, flag)!=SU_SUCCESS) {
+        printf("%s: *ERROR* su_open(%s, %d) Failed\n", __func__, name, flag);
+        return NULL;
+    }
+    db = PyCapsule_New(id, NULL, NULL);
+    return db;
+}
+#endif

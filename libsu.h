@@ -16,11 +16,13 @@
 #define SU_READONLY 0
 #define SU_CREATE   1
 #define SU_UPDATE   2
+#define SU_SUCCESS  0
 
 #define SU_INT16    0
 #define SU_INT32    1
 #define SU_FLOAT    2
 #define SU_IBMF     3   //ibm float, unlikely
+#define SU_UNKNOWN  4
 
 #define MAX(a,b)    ((a>b)?(a):(b))
 

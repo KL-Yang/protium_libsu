@@ -1,4 +1,4 @@
-//translation table
+//translation table, must include trace@.ibyte=240
 const su_attr_t default_su_attr[]={
     {.name="tracl",  .db_type=PT_INT32, .ibyte=0,   .nbyte=4, .su_type=SU_INT32},
     {.name="tracr",  .db_type=PT_INT32, .ibyte=4,   .nbyte=4, .su_type=SU_INT32},
