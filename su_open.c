@@ -1,12 +1,9 @@
 static int i_su_ninst(int fd, int length)
 {
-    off_t file_len;
-    file_len = lseek(fd, 0, SEEK_END);
+    off_t file_len = lseek(fd, 0, SEEK_END);
     lseek(fd, 0, SEEK_SET);
     if(file_len%length!=0) {
         printf("%s: file lenght is not consistent!\n", __func__);
-        printf("%s: file_len=%ld, length=%d\n", __func__, 
-            file_len, length);
         abort();
     }
     return file_len/length;
