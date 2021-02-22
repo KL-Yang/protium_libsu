@@ -49,6 +49,8 @@ typedef struct protium_suid_struct protium_suid_t;
 
 int su_open(SUID_t *id, const char *path, int flag);
 int su_ninst(SUID_t id);
+int su_nsamp(SUID_t id);
+int su_setnsamp(SUID_t id, int ns);
 int su_read(SUID_t id, const char *name, void *buff, int first, int nmemb);
 int su_close(SUID_t id);
 

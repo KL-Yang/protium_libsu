@@ -30,7 +30,7 @@ int su_open(SUID_t *id, const char *path, int flag)
     return 0;
 }
 
-int su_getnsamp(SUID_t id)
+int su_nsamp(SUID_t id)
 {
     return ((protium_suid_t*)id)->ns;
 }
