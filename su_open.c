@@ -26,21 +26,16 @@ int su_open(SUID_t *id, const char *path, int flag)
         su->si = nsdt[1];
         su->skip = 240+su->ns*sizeof(float);
         su->ninst = i_su_ninst(su->fid, su->skip);
-        printf("%s: ninst=%d ns=%d si=%d\n", __func__, 
-            su->ninst, su->ns, su->si);
     }
     return 0;
 }
 
-int su_gettrace(SUID_t id, int *ns, int *si)
+int su_getnsamp(SUID_t id)
 {
-    protium_suid_t *su = id;
-    *ns = su->ns;
-    *si = su->si;
-    return 0;
+    return ((protium_suid_t*)id)->ns;
 }
 
-int su_settrace(SUID_t id, int ns, int si)
+int su_setnsamp(SUID_t id, int ns)
 {
     protium_suid_t *su = id;
     if(su->flag!=SU_CREATE || su->ns!=0 || su->si!=0) {
@@ -49,7 +44,6 @@ int su_settrace(SUID_t id, int ns, int si)
         abort();
     }
     su->ns = ns;
-    su->si = si;
     su->skip = 240+ns*sizeof(float);
     return 0;
 }

@@ -20,6 +20,7 @@ int su_read(SUID_t id, const char *name, void *buff, int first,
         abort();
     }
     //TODO: add type convert later
+    //void *work = calloc()
     su_readbytes(id, attr, buff, first, nmemb); //and conver to db required format!!!
     return 0;
 }
