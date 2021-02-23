@@ -3,10 +3,10 @@
 //this test update a file to its inversed data
 int main()
 {
-    system("cp -f wav.su wav_t1.su");
+    system("cp -f wav.su wav_test1c.su");
 
     SUID_t id;
-    su_open(&id, "wav_t1.su", SU_UPDATE);
+    su_open(&id, "wav_test1c.su", SU_UPDATE);
     int ninst = su_ninst(id);
     int nsamp = su_nsamp(id);
     float *v1 = calloc(nsamp, sizeof(float));
