@@ -66,7 +66,7 @@ static PyObject * pysu_read(PyObject __attribute__((unused)) *self, PyObject *ar
         abort();
     }
 
-    if(attr->ibyte==240) {nd = 1; dims[0] = num; } 
+    if(attr->ibyte!=240) {nd = 1; dims[0] = num; } 
     else { nd = 2; dims[0] = num; dims[1] = su->ns; }
     np_type = pt_type_pt2np(attr->db_type);
 
