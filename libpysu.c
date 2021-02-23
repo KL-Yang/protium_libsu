@@ -18,9 +18,9 @@ static PyMethodDef pysuMethods[] = {
     {"close",     pysu_close,     METH_VARARGS, "Close SU dataset."},
 /*    {"addattr",   pydb_addattr,   METH_VARARGS, "db.addattr(id, name, dict)."},
     {"attrs",     pydb_attrs,     METH_VARARGS, "Get attributes names as list."},
-    {"ninst",     pydb_ninst,     METH_VARARGS, "ninst = db.ninst(id)"},
     {"getattr",   pydb_getattr,   METH_VARARGS, "dict = db.getattr(id, name)"},
-*/  {"read",      pysu_read,      METH_VARARGS, "ndarry = su.read(id, name, first, num)"},
+*/  {"ninst",     pysu_ninst,     METH_VARARGS, "ninst = su.ninst(id)"},
+    {"read",      pysu_read,      METH_VARARGS, "ndarry = su.read(id, name, first, num)"},
     {"write",     pysu_write,     METH_VARARGS, "su.write(id, name, ndarry, first, num)"},
     {NULL, NULL, 0, NULL} /* Sentinel */
 };

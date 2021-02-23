@@ -80,4 +80,22 @@ static PyObject * pysu_open(PyObject __attribute__((unused)) *self, PyObject *ar
     db = PyCapsule_New(id, NULL, NULL);
     return db;
 }
+
+/**
+ * @brief Get number of seismic traces stored in database, for example, 
+ *   ntrace = su.ninst(id)
+ * @param[in] id opaque object to access the database
+ * @return -1 for Failure or number of traces
+ * */
+static PyObject * pysu_ninst(PyObject __attribute__((unused)) *self, PyObject *args)
+{
+    PyObject *db;
+    protium_suid_t *id;
+    PyArg_ParseTuple(args, "O", &db);
+    id = PyCapsule_GetPointer(db, NULL);
+    
+    int64_t ninst;
+    ninst = su_ninst(id);
+    return PyLong_FromLong(ninst);
+}
 #endif
