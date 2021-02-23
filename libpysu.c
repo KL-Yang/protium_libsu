@@ -19,7 +19,8 @@ static PyMethodDef pysuMethods[] = {
 /*    {"addattr",   pydb_addattr,   METH_VARARGS, "db.addattr(id, name, dict)."},
     {"attrs",     pydb_attrs,     METH_VARARGS, "Get attributes names as list."},
     {"getattr",   pydb_getattr,   METH_VARARGS, "dict = db.getattr(id, name)"},
-*/  {"ninst",     pysu_ninst,     METH_VARARGS, "ninst = su.ninst(id)"},
+*/  {"nsamp",     pysu_nsamp,     METH_VARARGS, "nsamp = su.nsamp(id)"},
+    {"ninst",     pysu_ninst,     METH_VARARGS, "ninst = su.ninst(id)"},
     {"read",      pysu_read,      METH_VARARGS, "ndarry = su.read(id, name, first, num)"},
     {"write",     pysu_write,     METH_VARARGS, "su.write(id, name, ndarry, first, num)"},
     {NULL, NULL, 0, NULL} /* Sentinel */

@@ -98,4 +98,23 @@ static PyObject * pysu_ninst(PyObject __attribute__((unused)) *self, PyObject *a
     ninst = su_ninst(id);
     return PyLong_FromLong(ninst);
 }
+
+/**
+ * @brief Get number of samples per trace stored in database, for example, 
+ *   nsamp = su.nsamp(id)
+ * @param[in] id opaque object to access the database
+ * @return -1 for Failure or number of samples
+ * */
+static PyObject * pysu_nsamp(PyObject __attribute__((unused)) *self, PyObject *args)
+{
+    PyObject *db;
+    protium_suid_t *id;
+    PyArg_ParseTuple(args, "O", &db);
+    id = PyCapsule_GetPointer(db, NULL);
+    
+    int64_t nsamp;
+    nsamp = su_nsamp(id);
+    return PyLong_FromLong(nsamp);
+}
+
 #endif
