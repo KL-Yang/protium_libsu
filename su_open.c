@@ -117,4 +117,21 @@ static PyObject * pysu_nsamp(PyObject __attribute__((unused)) *self, PyObject *a
     return PyLong_FromLong(nsamp);
 }
 
+/**
+ * @brief Set number of samples per trace stored in database, for example, 
+ *   su.setnsamp(id, nsamp)
+ * @param[in] id opaque object to access the database
+ * @return -1 for Failure or number of samples
+ * */
+static PyObject * pysu_setnsamp(PyObject __attribute__((unused)) *self, PyObject *args)
+{
+    int nsamp;
+    PyObject *db;
+    protium_suid_t *id;
+    PyArg_ParseTuple(args, "Oi", &db, &nsamp);
+    id = PyCapsule_GetPointer(db, NULL);
+    
+    su_setnsamp(id, nsamp);
+    return PyLong_FromLong(0);
+}
 #endif
