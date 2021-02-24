@@ -8,6 +8,7 @@
 
 #include "libsu.h"
 #include "su_utility.c"
+#include "su_attr.c"
 #include "su_read.c"
 #include "su_open.c"
 #include "su_close.c"
@@ -17,8 +18,8 @@ static PyMethodDef pysuMethods[] = {
     {"open",      pysu_open,      METH_VARARGS, "Open a Seismic Unix dataset."},
     {"close",     pysu_close,     METH_VARARGS, "Close SU dataset."},
 /*    {"addattr",   pydb_addattr,   METH_VARARGS, "db.addattr(id, name, dict)."},
-    {"attrs",     pydb_attrs,     METH_VARARGS, "Get attributes names as list."},
-*/  {"setnsamp",  pysu_setnsamp,  METH_VARARGS, "su.setnsamp(id, nsamp)"},
+*/  {"attrs",     pysu_attrs,     METH_VARARGS, "Get attributes names as list."},
+    {"setnsamp",  pysu_setnsamp,  METH_VARARGS, "su.setnsamp(id, nsamp)"},
     {"nsamp",     pysu_nsamp,     METH_VARARGS, "nsamp = su.nsamp(id)"},
     {"ninst",     pysu_ninst,     METH_VARARGS, "ninst = su.ninst(id)"},
     {"read",      pysu_read,      METH_VARARGS, "ndarry = su.read(id, name, first, num)"},

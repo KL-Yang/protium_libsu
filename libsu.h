@@ -45,6 +45,7 @@ struct protium_suid_struct {
     int         skip;       //< trace skip
     su_attr_t * attr;
     int         nattr;
+    char     ** names;
 };
 typedef struct protium_suid_struct protium_suid_t;
 

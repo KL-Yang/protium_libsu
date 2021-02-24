@@ -10,14 +10,35 @@ const su_attr_t default_su_attr[]={
     {.name="trace",  .db_type=PT_FLOAT, .ibyte=240, .nbyte=0, .su_type=SU_FLOAT}
 };
 
+static void 
+i_su_names(const su_attr_t *attr, int nattr, char **names)
+{
+    for(int i=0; i<nattr; i++) {
+        names[i] = calloc(strlen(attr[i].name)+1, sizeof(char));
+        strcpy(names[i], attr[i].name);
+    }
+    names[nattr] = NULL;
+}
+
+static void i_su_names_free(char **names, int nattr)
+{
+    for(int i=0; i<nattr; i++)
+        free(names[i]);
+    free(names);
+}
+
+
 //there should be a default table and a translation table.
 //search the user provided one first if exist!
 int su_translate(SUID_t id, const su_attr_t *attr, int nattr)
 {
     protium_suid_t *su = id;
+    i_su_names_free(su->names, su->nattr);
     su->attr = realloc(su->attr, nattr*sizeof(su_attr_t));
     memcpy(su->attr, attr, nattr*sizeof(su_attr_t));
     su->nattr = nattr;
+    su->names = calloc(su->nattr+1, sizeof(void*));
+    i_su_names(su->attr, su->nattr, su->names);
     return 0;
 }
 
