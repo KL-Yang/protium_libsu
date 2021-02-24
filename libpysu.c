@@ -8,6 +8,7 @@
 
 #include "libsu.h"
 #include "su_utility.c"
+#include "su_getattr.c"
 #include "su_attr.c"
 #include "su_read.c"
 #include "su_open.c"
@@ -19,6 +20,7 @@ static PyMethodDef pysuMethods[] = {
     {"close",     pysu_close,     METH_VARARGS, "Close SU dataset."},
 /*    {"addattr",   pydb_addattr,   METH_VARARGS, "db.addattr(id, name, dict)."},
 */  {"attrs",     pysu_attrs,     METH_VARARGS, "Get attributes names as list."},
+    {"getattr",   pysu_getattr,   METH_VARARGS, "su.getattr(id, name) return attribute info"},
     {"setnsamp",  pysu_setnsamp,  METH_VARARGS, "su.setnsamp(id, nsamp)"},
     {"nsamp",     pysu_nsamp,     METH_VARARGS, "nsamp = su.nsamp(id)"},
     {"ninst",     pysu_ninst,     METH_VARARGS, "ninst = su.ninst(id)"},
