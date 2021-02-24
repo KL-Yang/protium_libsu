@@ -4,7 +4,16 @@ const su_attr_t default_su_attr[]={
     {.name="tracr",  .db_type=PT_INT32, .ibyte=4,   .nbyte=4, .su_type=SU_INT32},
     {.name="fldr",   .db_type=PT_INT32, .ibyte=8,   .nbyte=4, .su_type=SU_INT32},
     {.name="tracf",  .db_type=PT_INT32, .ibyte=12,  .nbyte=4, .su_type=SU_INT32},
+    {.name="ep",     .db_type=PT_INT32, .ibyte=16,  .nbyte=4, .su_type=SU_INT32},
+    {.name="cdp",    .db_type=PT_INT32, .ibyte=20,  .nbyte=4, .su_type=SU_INT32},
+    {.name="cdpt",   .db_type=PT_INT32, .ibyte=24,  .nbyte=4, .su_type=SU_INT32},
+    {.name="trid",   .db_type=PT_INT32, .ibyte=28,  .nbyte=2, .su_type=SU_INT32},
+    {.name="nvs",    .db_type=PT_INT32, .ibyte=30,  .nbyte=2, .su_type=SU_INT32},
+    {.name="nhs",    .db_type=PT_INT32, .ibyte=32,  .nbyte=2, .su_type=SU_INT32},
+    {.name="duse",   .db_type=PT_INT32, .ibyte=34,  .nbyte=2, .su_type=SU_INT32},
     {.name="offset", .db_type=PT_INT32, .ibyte=36,  .nbyte=4, .su_type=SU_INT32},
+    {.name="gelev",  .db_type=PT_INT32, .ibyte=40,  .nbyte=4, .su_type=SU_INT32},
+    {.name="selev",  .db_type=PT_INT32, .ibyte=44,  .nbyte=4, .su_type=SU_INT32},
     {.name="ns",     .db_type=PT_INT32, .ibyte=114, .nbyte=2, .su_type=SU_INT16},
     //for trace, nbyte is a place holder, always last item!
     {.name="trace",  .db_type=PT_FLOAT, .ibyte=240, .nbyte=0, .su_type=SU_FLOAT}

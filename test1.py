@@ -15,6 +15,8 @@ ns = su.read(su1, "ns", 0, 1)
 print("#ninst=",ninst,"nsamp=",nsamp,"ns=",ns)
 names = su.attrs(su1)
 print("#attr:", names)
+t1 = su.getattr(su1, "trace")
+print("#trace=", t1)
 v1 = su.read(su1, "trace", 0, 1)
 v2 = -1*v1
 print("#shape=",v1.shape)
