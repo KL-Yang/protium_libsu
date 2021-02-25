@@ -48,7 +48,6 @@ PyMODINIT_FUNC PyInit_libpysu(void)
       return NULL;
     import_array();
     PydbError = PyErr_NewException("db.error", NULL, NULL);
-    Py_INCREF(PydbError);
     PyModule_AddObject(m, "error", PydbError);
 
     PyModule_AddIntConstant(m, "CREATE",   SU_CREATE);
