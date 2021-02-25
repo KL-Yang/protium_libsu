@@ -26,6 +26,7 @@ int main()
     for(int i=0; i<ninst; i++)
         ns[i] = nsamp;
     su_write(su2, "ns", ns, 0, ninst);
+    free(ns);
     su_close(su1);
     su_close(su2);
 
