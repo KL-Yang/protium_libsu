@@ -2,6 +2,7 @@
 int su_close(SUID_t id)
 {
     protium_suid_t *su = id;
+    i_su_names_free(su->names, su->nattr);
     free(su->attr);
     close(su->fid);
     free(su);
