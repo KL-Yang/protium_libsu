@@ -4,6 +4,7 @@ int su_readbytes(SUID_t id, const su_attr_t *attr, void *buff,
     protium_suid_t *su = id;
     assert(su->skip!=0 && su->ninst>=first+ninst);
     int nbyte=(attr->su_type==SU_INT16)?(2):(4);
+    if(attr->ibyte==240) { nbyte *= su->ns; }
     for(int i=0; i<ninst; i++) {
         int64_t f_offs=(first+i)*su->skip+attr->ibyte;
         int64_t b_offs=i*nbyte;
