@@ -22,5 +22,7 @@ int main()
         printf(" %3d  %16e  %16e\n", i, v1[i], v2[i]);
     printf("# ninst=%d, nsamp=%d\n", ninst, nsamp);
     su_close(id);
+    free(v1);
+    free(v2);
     return 0;
 }

@@ -76,19 +76,20 @@ static void su_int32to16(const int32_t *p1, int n, int16_t *p2)
 //this is a none efficient simple convert, fix later.
 static void su_type2db(const void *p1, int su_type, void *p2, int t2, int nmemb)
 {
-    void *work = calloc(nmemb, 4);
+    void *work = calloc(nmemb, sizeof(int32_t));
     int t1 = PT_INT32;  //default
     switch(su_type) {
         case SU_INT16:
-            t1 = PT_INT32;
             su_int16to32(p1, nmemb, work);
             break;
         case SU_INT32:
-            memcpy(work, p1, nmemb*sizeof(int32_t));
+            for(int i=0; i<nmemb; i++)
+                ((int32_t*)work)[i]=((int32_t*)p1)[i];
             break;
         case SU_FLOAT:
             t1 = PT_FLOAT;
-            memcpy(work, p1, nmemb*sizeof(float));
+            for(int i=0; i<nmemb; i++)
+                ((float*)work)[i]=((float*)p1)[i];
             break;
         default:
             printf("Unknown type yet!");
@@ -98,7 +99,7 @@ static void su_type2db(const void *p1, int su_type, void *p2, int t2, int nmemb)
     free(work);
 }
 
-static void su_type2su(const void *p1, int db_type, void *p2,
+static void su_type2su_old(const void *p1, int db_type, void *p2,
     int su_type, int nmemb)
 {
     int t2 = PT_INT32;  //convert to int32 first
@@ -111,4 +112,24 @@ static void su_type2su(const void *p1, int db_type, void *p2,
     else
         memcpy(p2, work, nmemb*sizeof(float));
     free(work);
+}
+
+static void su_type2su(const void *p1, int db_type, void *p2,
+    int su_type, int nmemb)
+{
+    if(db_type==PT_FLOAT) {
+        assert(su_type==SU_FLOAT);
+        for(int i=0; i<nmemb; i++)
+            ((float*)p2)[i]=((float*)p1)[i];
+    } else {
+        assert(db_type==PT_INT32);
+        if(su_type==SU_INT16) {
+            for(int i=0; i<nmemb; i++)
+                ((int16_t*)p2)[i]=((int32_t*)p1)[i];
+        } else {
+            assert(su_type==SU_INT32);
+            for(int i=1; i<nmemb-1; i++)
+                ((int32_t*)p2)[i]=((int32_t*)p1)[i];
+        }
+    }
 }
