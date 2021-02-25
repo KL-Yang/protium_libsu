@@ -1,4 +1,5 @@
 //translation table, must include trace@.ibyte=240
+//TODO: user can add their own translation definition.
 const su_attr_t default_su_attr[]={
     {.name="tracl",  .db_type=PT_INT32, .ibyte=0,   .su_type=SU_INT32},
     {.name="tracr",  .db_type=PT_INT32, .ibyte=4,   .su_type=SU_INT32},
@@ -99,7 +100,10 @@ static void su_type2db(const void *p1, int su_type, void *p2, int t2, int nmemb)
     free(work);
 }
 
-static void su_type2su_old(const void *p1, int db_type, void *p2,
+/**
+ * PT_type to SU_type conversion
+ * */
+static void su_type2su(const void *p1, int db_type, void *p2,
     int su_type, int nmemb)
 {
     int t2 = PT_INT32;  //convert to int32 first
@@ -112,27 +116,4 @@ static void su_type2su_old(const void *p1, int db_type, void *p2,
     else
         memcpy(p2, work, nmemb*sizeof(float));
     free(work);
-}
-
-/**
- * PT_type to SU_type conversion
- * */
-static void su_type2su(const void *p1, int db_type, void *p2,
-    int su_type, int nmemb)
-{
-    if(db_type==PT_FLOAT) {
-        assert(su_type==SU_FLOAT);
-        for(int i=0; i<nmemb; i++)
-            ((float*)p2)[i]=((float*)p1)[i];
-    } else {
-        assert(db_type==PT_INT32);
-        if(su_type==SU_INT16) {
-            for(int i=0; i<nmemb; i++)
-                ((int16_t*)p2)[i]=((int32_t*)p1)[i];
-        } else {
-            assert(su_type==SU_INT32);
-            for(int i=1; i<nmemb-1; i++)
-                ((int32_t*)p2)[i]=((int32_t*)p1)[i];
-        }
-    }
 }
