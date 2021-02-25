@@ -81,7 +81,6 @@ static PyObject * pysu_write(PyObject __attribute__((unused)) *self, PyObject *a
     }
 
     np_type = PyArray_TYPE((PyArrayObject*)wtattr);
-    //np_type = np_type_to_db(np_type);
     np_type = pt_type_np2pt(np_type);
 
     pdes = malloc(num*pt_sizeof(attr->db_type, length));

@@ -33,7 +33,6 @@ typedef struct {
     char    name[32];
     int     db_type;
     int     ibyte;      //< position in su header
-    int     nbyte;      //< number of byte to read
     int     su_type;    //< su data type
 } su_attr_t;
 
