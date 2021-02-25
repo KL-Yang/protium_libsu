@@ -3,10 +3,11 @@ int su_readbytes(SUID_t id, const su_attr_t *attr, void *buff,
 {
     protium_suid_t *su = id;
     assert(su->skip!=0 && su->ninst>=first+ninst);
+    int nbyte=(attr->su_type==SU_INT16)?(2):(4);
     for(int i=0; i<ninst; i++) {
         int64_t f_offs=(first+i)*su->skip+attr->ibyte;
-        int64_t b_offs=i*attr->nbyte;
-        if(pread(su->fid, buff+b_offs, attr->nbyte, f_offs)!=attr->nbyte) {
+        int64_t b_offs=i*nbyte;
+        if(pread(su->fid, buff+b_offs, nbyte, f_offs)!=nbyte) {
             printf("%s: pread not finished!\n", __func__);
             abort();
         }
@@ -23,17 +24,11 @@ int su_read(SUID_t id, const char *name, void *buff, int first,
         printf("%s: attribute %s not found!\n", __func__, name);
         abort();
     }
-    su_attr_t curr; memcpy(&curr, attr, sizeof(su_attr_t));
-    int length=1;
-    if(curr.ibyte==240) {    //must be trace!
-        length=su->ns;
-        curr.nbyte = su->ns*sizeof(float);
-    }
-    void *work = calloc(nmemb, curr.nbyte);
-    su_readbytes(id, &curr, work, first, nmemb); //and conver to db required format!!!
-    //for(int i=0; i<length; i++)
-    //    printf(" [%d] %f\n", i, ((float*)work)[i]);
-    su_type2db(work, curr.su_type, buff, curr.db_type, nmemb*length);
+    int length=(attr->ibyte==240)?(su->ns):(1);
+    int size=(attr->su_type==SU_INT16)?(2):(4);
+    void *work = calloc(nmemb*length, size);
+    su_readbytes(id, attr, work, first, nmemb); //and conver to db required format!!!
+    su_type2db(work, attr->su_type, buff, attr->db_type, nmemb*length);
     free(work);
     return 0;
 }
