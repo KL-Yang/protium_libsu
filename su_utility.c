@@ -1,4 +1,5 @@
 //translation table, must include trace@.ibyte=240
+//nbyte is redundent of su_type
 const su_attr_t default_su_attr[]={
     {.name="tracl",  .db_type=PT_INT32, .ibyte=0,   .nbyte=4, .su_type=SU_INT32},
     {.name="tracr",  .db_type=PT_INT32, .ibyte=4,   .nbyte=4, .su_type=SU_INT32},
@@ -7,10 +8,10 @@ const su_attr_t default_su_attr[]={
     {.name="ep",     .db_type=PT_INT32, .ibyte=16,  .nbyte=4, .su_type=SU_INT32},
     {.name="cdp",    .db_type=PT_INT32, .ibyte=20,  .nbyte=4, .su_type=SU_INT32},
     {.name="cdpt",   .db_type=PT_INT32, .ibyte=24,  .nbyte=4, .su_type=SU_INT32},
-    {.name="trid",   .db_type=PT_INT32, .ibyte=28,  .nbyte=2, .su_type=SU_INT32},
-    {.name="nvs",    .db_type=PT_INT32, .ibyte=30,  .nbyte=2, .su_type=SU_INT32},
-    {.name="nhs",    .db_type=PT_INT32, .ibyte=32,  .nbyte=2, .su_type=SU_INT32},
-    {.name="duse",   .db_type=PT_INT32, .ibyte=34,  .nbyte=2, .su_type=SU_INT32},
+    {.name="trid",   .db_type=PT_INT32, .ibyte=28,  .nbyte=2, .su_type=SU_INT16},
+    {.name="nvs",    .db_type=PT_INT32, .ibyte=30,  .nbyte=2, .su_type=SU_INT16},
+    {.name="nhs",    .db_type=PT_INT32, .ibyte=32,  .nbyte=2, .su_type=SU_INT16},
+    {.name="duse",   .db_type=PT_INT32, .ibyte=34,  .nbyte=2, .su_type=SU_INT16},
     {.name="offset", .db_type=PT_INT32, .ibyte=36,  .nbyte=4, .su_type=SU_INT32},
     {.name="gelev",  .db_type=PT_INT32, .ibyte=40,  .nbyte=4, .su_type=SU_INT32},
     {.name="selev",  .db_type=PT_INT32, .ibyte=44,  .nbyte=4, .su_type=SU_INT32},
@@ -114,6 +115,9 @@ static void su_type2su_old(const void *p1, int db_type, void *p2,
     free(work);
 }
 
+/**
+ * PT_type to SU_type conversion
+ * */
 static void su_type2su(const void *p1, int db_type, void *p2,
     int su_type, int nmemb)
 {
