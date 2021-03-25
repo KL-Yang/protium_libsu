@@ -8,7 +8,7 @@ int main()
     SUID_t id;
     su_open(&id, "wav_test1c.su", SU_UPDATE);
     int ninst = su_ninst(id);
-    int nsamp = su_nsamp(id);
+    int nsamp = su_nsamp(id, 0);
     float *v1 = calloc(nsamp, sizeof(float));
     float *v2 = calloc(nsamp, sizeof(float));
     su_read(id, "trace", v1, 0, 1);

@@ -18,6 +18,8 @@
 #define SU_UPDATE   2
 #define SU_SUCCESS  0
 
+#define SU_FLAG_WRITE   (1<<0)  //write started
+
 #define SU_INT16    0
 #define SU_INT32    1
 #define SU_FLOAT    2
@@ -39,6 +41,7 @@ typedef struct {
 struct protium_suid_struct {
     int         fid;        //< su file id
     int         ninst;
+    int         mode;
     int         flag;
     int         ns;
     int         skip;       //< trace skip
@@ -50,9 +53,7 @@ typedef struct protium_suid_struct protium_suid_t;
 
 int su_open(SUID_t *id, const char *path, int flag);
 int su_ninst(SUID_t id);
-//TODO: su_nsamp(id, ns), get or set nsamp!
-int su_nsamp(SUID_t id);
-int su_setnsamp(SUID_t id, int ns);
+int su_nsamp(SUID_t id, int ns);    //get or set ns
 int su_read(SUID_t id, const char *name, void *buff, int first, int nmemb);
 int su_write(SUID_t id, const char *name, void *buff, int first, int nmemb);
 int su_close(SUID_t id);

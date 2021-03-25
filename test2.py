@@ -9,11 +9,11 @@ import libpysu as su
 ##########################################################################
 su1   = su.open("model_cp.su", su.READONLY)
 ninst = su.ninst(su1)
-nsamp = su.nsamp(su1)
+nsamp = su.nsamp(su1, 0)
 print("#ninst=",ninst,"nsamp=",nsamp)
 
 su2   = su.open("model_test2py.su", su.CREATE)
-su.setnsamp(su2, nsamp)
+su.nsamp(su2, nsamp)
 
 for i in range(ninst):
     v1 = su.read(su1, "trace", i, 1)

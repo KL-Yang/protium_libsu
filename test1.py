@@ -10,7 +10,7 @@ os.system("cp -f wav.su wav_test1py.su")
 ##########################################################################
 su1   = su.open("wav_test1py.su", su.UPDATE)
 ninst = su.ninst(su1)
-nsamp = su.nsamp(su1)
+nsamp = su.nsamp(su1, 0)
 ns = su.read(su1, "ns", 0, 1)
 print("#ninst=",ninst,"nsamp=",nsamp,"ns=",ns)
 names = su.attrs(su1)

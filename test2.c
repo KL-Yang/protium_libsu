@@ -6,11 +6,11 @@ int main()
     SUID_t su1, su2;
     su_open(&su1, "model_cp.su", SU_READONLY);
     int ninst = su_ninst(su1);
-    int nsamp = su_nsamp(su1);
+    int nsamp = su_nsamp(su1, 0);
     printf("ninst=%d, nsamp=%d\n", ninst, nsamp);
 
     su_open(&su2, "model_test2c.su", SU_CREATE);
-    su_setnsamp(su2, nsamp);
+    su_nsamp(su2, nsamp);
 
     float *v1 = calloc(nsamp, sizeof(float));
     float *v2 = calloc(nsamp, sizeof(float));

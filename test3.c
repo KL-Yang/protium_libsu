@@ -5,7 +5,7 @@ int main()
     SUID_t su1, su2;
     su_open(&su1, "shots.total.su", SU_READONLY);
     int ninst = su_ninst(su1);
-    int nsamp = su_nsamp(su1);
+    int nsamp = su_nsamp(su1, 0);
     printf("#ninst=%d nsamp=%d\n", ninst, nsamp);
 
     int32_t *fldr;
@@ -35,7 +35,7 @@ int main()
             first[i]+nmemb[i]-1);
 
     su_open(&su2, "shots.test3c.su", SU_CREATE);
-    su_setnsamp(su2, nsamp);
+    su_nsamp(su2, nsamp);
     for(int i=0; i<nshot; i++) {
         float   *v1 = calloc(nmemb[i], nsamp*sizeof(float));
         int32_t *ns = calloc(nmemb[i], sizeof(int32_t));

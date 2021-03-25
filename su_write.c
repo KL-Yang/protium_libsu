@@ -20,6 +20,7 @@ int su_write(SUID_t id, const char *name, void *buff, int first,
     int nmemb)
 {
     protium_suid_t *su = id;
+    su->flag |= SU_FLAG_WRITE;  //write started
     su->ninst = MAX(su->ninst, first+nmemb);
     const su_attr_t *attr = su_findattr(id, name);
     if(attr==NULL) {

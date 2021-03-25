@@ -12,7 +12,7 @@ static int i_su_ninst(int fd, int length)
 int su_open(SUID_t *id, const char *path, int flag)
 {
     protium_suid_t *su = *id = calloc(1, sizeof(protium_suid_t));
-    su->flag = flag;
+    su->mode = flag;
     su->nattr = sizeof(default_su_attr)/sizeof(su_attr_t);
     su->attr  = calloc(su->nattr, sizeof(su_attr_t));
     su->names = calloc(su->nattr+1, sizeof(void*));
@@ -38,21 +38,14 @@ int su_open(SUID_t *id, const char *path, int flag)
     return 0;
 }
 
-int su_nsamp(SUID_t id)
-{
-    return ((protium_suid_t*)id)->ns;
-}
-
-int su_setnsamp(SUID_t id, int ns)
+int su_nsamp(SUID_t id, int ns)
 {
     protium_suid_t *su = id;
-    if(su->flag!=SU_CREATE || su->ns!=0) {
-        printf("%s: only SU_CREATE can change ns!\n", __func__);
-        abort();
-    }
-    su->ns = ns;
-    su->skip = 240+ns*sizeof(float);
-    return 0;
+    if(su->mode==SU_CREATE && (!(su->flag & SU_FLAG_WRITE))) {
+        su->ns = ns;
+        su->skip = 240+ns*sizeof(float);
+    } //else do nothing but return current ns
+    return (su->ns);
 }
 
 int su_ninst(SUID_t id)
@@ -102,38 +95,24 @@ static PyObject * pysu_ninst(PyObject __attribute__((unused)) *self, PyObject *a
 }
 
 /**
- * @brief Get number of samples per trace stored in database, for example, 
- *   nsamp = su.nsamp(id)
- * @param[in] id opaque object to access the database
- * @return -1 for Failure or number of samples
- * */
-static PyObject * pysu_nsamp(PyObject __attribute__((unused)) *self, PyObject *args)
-{
-    PyObject *db;
-    protium_suid_t *id;
-    PyArg_ParseTuple(args, "O", &db);
-    id = PyCapsule_GetPointer(db, NULL);
-    
-    int64_t nsamp;
-    nsamp = su_nsamp(id);
-    return PyLong_FromLong(nsamp);
-}
-
-/**
  * @brief Set number of samples per trace stored in database, for example, 
  *   su.setnsamp(id, nsamp)
  * @param[in] id opaque object to access the database
  * @return -1 for Failure or number of samples
  * */
-static PyObject * pysu_setnsamp(PyObject __attribute__((unused)) *self, PyObject *args)
+static PyObject * pysu_nsamp(PyObject __attribute__((unused)) *self, PyObject *args)
 {
-    int nsamp;
+    int ok, nsamp;
     PyObject *db;
     protium_suid_t *id;
-    PyArg_ParseTuple(args, "Oi", &db, &nsamp);
+    ok = PyArg_ParseTuple(args, "Oi", &db, &nsamp);
+    if(!ok) {
+        printf("%s: parameter parse failed!\n", __func__);
+        exit(1);
+    }
     id = PyCapsule_GetPointer(db, NULL);
     
-    su_setnsamp(id, nsamp);
+    su_nsamp(id, nsamp);
     return PyLong_FromLong(0);
 }
 #endif

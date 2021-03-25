@@ -17,7 +17,7 @@ def group_last(gather, first):
 ##########################################################################
 su1   = su.open("shots.total.su", su.READONLY)
 ninst = su.ninst(su1)
-nsamp = su.nsamp(su1)
+nsamp = su.nsamp(su1, 0)
 print("#ninst=",ninst,"nsamp=",nsamp)
 
 fldr  = su.read(su1, "fldr", 0, ninst)
@@ -33,7 +33,7 @@ for i in range(nshot):
     print("group[%4d] %8d->%8d"%(i, tr0[i], tr0[i]+trn[i]-1))
 
 su2   = su.open("shots.test3py.su", su.CREATE)
-su.setnsamp(su2, nsamp)
+su.nsamp(su2, nsamp)
 for i in range(nshot):
     v1 = su.read(su1, "trace", tr0[i], trn[i])
     v1 = -1*v1
