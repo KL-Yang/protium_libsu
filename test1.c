@@ -1,3 +1,4 @@
+#include "test_common.h"
 #include "libsu.h"
 
 //this test update a file to its inversed data
