@@ -6,7 +6,7 @@
 
 #define LIBSU_PYTHON
 
-#include "libsu.h"
+#include "su_i.h"
 #include "su_utility.c"
 #include "su_getattr.c"
 #include "su_attr.c"
