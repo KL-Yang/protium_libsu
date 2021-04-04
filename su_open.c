@@ -112,7 +112,7 @@ static PyObject * pysu_nsamp(PyObject __attribute__((unused)) *self, PyObject *a
     }
     id = PyCapsule_GetPointer(db, NULL);
     
-    su_nsamp(id, nsamp);
-    return PyLong_FromLong(0);
+    nsamp = su_nsamp(id, nsamp);
+    return PyLong_FromLong(nsamp);
 }
 #endif

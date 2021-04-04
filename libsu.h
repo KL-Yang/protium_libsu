@@ -24,5 +24,6 @@ int su_close(SUID_t id);
 //SU_MAP_NAME: only translate names
 //SU_MAP_INFO: redifine all of the su_attr_t field
 //two type of translate
+const char **su_attrs(SUID_t id, int *nattr);
 
 #endif
