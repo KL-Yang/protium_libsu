@@ -1,7 +1,9 @@
+#!/usr/bin/python3
+
 import os, sys
 import numpy as np
 
-sys.path.insert(0, './module')
+sys.path.insert(0, '../module')
 import libpysu as su 
 
 os.system("cp -f wav.su wav_test1py.su")
