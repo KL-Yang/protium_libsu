@@ -11,7 +11,7 @@ import libpysu as su
 ##########################################################################
 su1   = su.open("model_cp.su", su.READONLY)
 ninst = su.ninst(su1)
-nsamp = su.nsamp(su1, 0)
+nsamp = su.nsamp(su1)
 print("#ninst=",ninst,"nsamp=",nsamp)
 
 su2   = su.open("model_test2py.su", su.CREATE)

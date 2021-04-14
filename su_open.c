@@ -44,6 +44,10 @@ int su_nsamp(SUID_t id, int ns)
     if(su->mode==SU_CREATE && (!(su->flag & SU_FLAG_WRITE))) {
         su->ns = ns;
         su->skip = 240+ns*sizeof(float);
+        if(su->ns<=0) {
+            printf("%s: set ns<%d> wrong!\n", __func__, ns);
+            abort();
+        }
     } //else do nothing but return current ns
     return (su->ns);
 }
@@ -102,16 +106,16 @@ static PyObject * pysu_ninst(PyObject __attribute__((unused)) *self, PyObject *a
  * */
 static PyObject * pysu_nsamp(PyObject __attribute__((unused)) *self, PyObject *args)
 {
-    int ok, nsamp;
+    int ok, nsamp=0;
     PyObject *db;
     protium_suid_t *id;
-    ok = PyArg_ParseTuple(args, "Oi", &db, &nsamp);
+    ok = PyArg_ParseTuple(args, "O|i", &db, &nsamp);
     if(!ok) {
         printf("%s: parameter parse failed!\n", __func__);
         exit(1);
     }
     id = PyCapsule_GetPointer(db, NULL);
-    
+    printf("%s: nsamp=%d\n", __func__, nsamp); 
     nsamp = su_nsamp(id, nsamp);
     return PyLong_FromLong(nsamp);
 }

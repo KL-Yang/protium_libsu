@@ -8,10 +8,3 @@ cd build; rm -rf build; make all; cd ..
 cp build/build/lib.linux-*-3.?/libpysu*.so "$PROTIUM_HOME/pylib/"
 cp libsu.h "$PROTIUM_HOME/include/protium/"
 cp build/libsu.a "$PROTIUM_HOME/lib"
-
-flags="--std=gnu99 -ggdb -O0 -I/home/protium/include/ -L/home/protium/lib"
-links="build/libsu.a -lptcomm"
-gcc $flags test1.c $links -o test1.exe
-gcc $flags test2.c $links -o test2.exe
-gcc $flags test3.c $links -o test3.exe 
-

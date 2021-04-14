@@ -17,7 +17,7 @@ def group_last(gather, first):
 ##########################################################################
 su1   = su.open("shots.total.su", su.READONLY)
 ninst = su.ninst(su1)
-nsamp = su.nsamp(su1, 0)
+nsamp = su.nsamp(su1)
 print("#ninst=",ninst,"nsamp=",nsamp)
 
 fldr  = su.read(su1, "fldr", 0, ninst)
