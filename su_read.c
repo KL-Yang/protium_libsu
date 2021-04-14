@@ -5,6 +5,7 @@ int su_readbytes(SUID_t id, const su_attr_t *attr, void *buff,
     assert(su->skip!=0 && su->ninst>=first+ninst);
     int nbyte=(attr->su_type==SU_INT16)?(2):(4);
     if(attr->ibyte==240) { nbyte *= su->ns; }
+    if(strcmp(attr->name,"_head")==0) { nbyte = 240; }
     for(int i=0; i<ninst; i++) {
         int64_t f_offs=(first+i)*su->skip+attr->ibyte;
         int64_t b_offs=i*nbyte;
@@ -27,6 +28,10 @@ int su_read(SUID_t id, const char *name, void *buff, int first,
     }
     int length=(attr->ibyte==240)?(su->ns):(1);
     int size=(attr->su_type==SU_INT16)?(2):(4);
+    if(strcmp(attr->name,"_head")==0) {   //special, read all head!
+        size = 1;   //byte stream!!!
+        length = 240;
+    }
     void *work = calloc(nmemb*length, size);
     su_readbytes(id, attr, work, first, nmemb); //and conver to db required format!!!
     su_type2db(work, attr->su_type, buff, attr->db_type, nmemb*length);
@@ -64,7 +69,11 @@ static PyObject * pysu_read(PyObject __attribute__((unused)) *self, PyObject *ar
 
     if(attr->ibyte!=240) {nd = 1; dims[0] = num; } 
     else { nd = 2; dims[0] = num; dims[1] = su->ns; }
-    np_type = pt_type_pt2np(attr->db_type);
+    if(strcmp(attr->name,"_head")==0) {
+        nd = 2; dims[0] = num; dims[1] = 240;
+        np_type = NPY_BYTE;    //byte stream
+    } else
+        np_type = pt_type_pt2np(attr->db_type);
 
     rdattr = PyArray_SimpleNew(nd, dims, np_type);
     void *pdes = PyArray_DATA((PyArrayObject*)rdattr);

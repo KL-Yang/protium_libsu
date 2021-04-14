@@ -4,7 +4,7 @@
         "type"    : "static",
         "make"    : {
             "srcs"     : ["libsu.c"],
-            "cflags"   : ["`pkg-config --cflags glib-2.0` -O2 -fPIC",
+            "cflags"   : ["`pkg-config --cflags glib-2.0` -ggdb -fPIC",
                           "`pkg-config --cflags python3`",
                           "-I${PROTIUM_HOME}/include",
                           "-W -Wall"],

@@ -2,9 +2,14 @@ static int su_writebytes(SUID_t id, const su_attr_t *attr,
     void *buff, int first, int ninst)
 {
     protium_suid_t *su = id;
+    if(su->skip==0) {
+        printf("Likely forgot to call su_nsamp() on new "
+                "created (SU_CREATE) su handle!\n");
+    }
     assert(su->skip!=0 && su->ninst>=first+ninst);
     int nbyte=(attr->su_type==SU_INT16)?(2):(4);
     if(attr->ibyte==240) { nbyte *= su->ns; }
+    if(strcmp(attr->name,"_head")==0) { nbyte = 240; }
     for(int i=0; i<ninst; i++) {
         int64_t f_offs=(first+i)*su->skip+attr->ibyte;
         int64_t b_offs=i*nbyte;
@@ -29,6 +34,10 @@ int su_write(SUID_t id, const char *name, void *buff, int first,
     }
     int length=(attr->ibyte==240)?(su->ns):(1);
     int size=(attr->su_type==SU_INT16)?(2):(4);
+    if(strcmp(attr->name,"_head")==0) {
+        size = 1;   //byte stream!!!
+        length = 240;
+    }
     void *work = calloc(nmemb*length, size);
     su_type2su(buff, attr->db_type, work, attr->su_type, nmemb*length);
     su_writebytes(id, attr, work, first, nmemb);
@@ -68,6 +77,7 @@ static PyObject * pysu_write(PyObject __attribute__((unused)) *self, PyObject *a
         abort();
     }
     int length=(attr->ibyte==240)?(id->ns):(1);
+    if(strcmp(attr->name,"_head")==0) { length=240; }
     nd = PyArray_NDIM((PyArrayObject*)wtattr);
     dims = PyArray_DIMS((PyArrayObject*)wtattr);
     if((length==1 && nd!=1) || (length!=1 && nd!=2) || (nd==2 && dims[1]!=length)) {

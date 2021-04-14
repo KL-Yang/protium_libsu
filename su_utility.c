@@ -60,7 +60,8 @@ const su_attr_t default_su_attr[]={
     {.name="d2",     .db_type=PT_FLOAT, .ibyte=188, .su_type=SU_FLOAT},
     {.name="f2",     .db_type=PT_FLOAT, .ibyte=192, .su_type=SU_FLOAT},
     //for trace, nbyte is a place holder, always last item!
-    {.name="trace",  .db_type=PT_FLOAT, .ibyte=240, .su_type=SU_FLOAT}
+    {.name="trace",  .db_type=PT_FLOAT, .ibyte=240, .su_type=SU_FLOAT},
+    {.name="_head",  .db_type=PT_BYTE,  .ibyte=0,   .su_type=SU_BYTE} //dummy attribute
 };
 
 static void 
@@ -120,6 +121,10 @@ static void su_int32to16(const int32_t *p1, int n, int16_t *p2)
 //this is a none efficient simple convert, fix later.
 static void su_type2db(const void *p1, int su_type, void *p2, int t2, int nmemb)
 {
+    if(su_type==SU_BYTE || t2==PT_BYTE) {
+        memcpy(p2, p1, nmemb);  //for unknown type nmemb=size!!
+        return;
+    }
     void *work = calloc(nmemb, sizeof(int32_t));
     int t1 = PT_INT32;  //default
     switch(su_type) {
@@ -149,6 +154,10 @@ static void su_type2db(const void *p1, int su_type, void *p2, int t2, int nmemb)
 static void su_type2su(const void *p1, int db_type, void *p2,
     int su_type, int nmemb)
 {
+    if(su_type==SU_BYTE || db_type==PT_BYTE) {
+        memcpy(p2, p1, nmemb);  //for unknown type nmemb=size!!
+        return;
+    }
     int t2 = PT_INT32;  //convert to int32 first
     if(su_type==SU_FLOAT)
         t2 = PT_FLOAT;

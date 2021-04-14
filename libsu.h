@@ -10,7 +10,8 @@
 #define SU_INT32    1
 #define SU_FLOAT    2
 #define SU_IBMF     3   //ibm float, unlikely
-#define SU_UNKNOWN  4
+#define SU_BYTE     4
+#define SU_UNKNOWN  5
 
 typedef struct protium_suid_struct * SUID_t;
 
