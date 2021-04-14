@@ -1,5 +1,5 @@
 #include "test_common.h"
-#include "libsu.h"
+#include "../libsu.h"
 
 //create a su file from scratch and copy over
 int main()
