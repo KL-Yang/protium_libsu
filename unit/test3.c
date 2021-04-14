@@ -1,5 +1,5 @@
 #include "test_common.h"
-#include "libsu.h"
+#include "../libsu.h"
 
 int main()
 {

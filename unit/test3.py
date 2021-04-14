@@ -1,7 +1,7 @@
 import os, sys
 import numpy as np
 
-sys.path.insert(0, './module')
+sys.path.insert(0, '../module')
 import libpysu as su 
 
 # find the last trace in the group
