@@ -1,10 +1,19 @@
 #include "test_common.h"
 #include "../libsu.h"
 
-int main()
+//copy group by group
+int main(int argc, char *argv[])
 {
+    if(argc<3) {
+        printf("Usage: cpy a.su b.su\n"
+               "    copy data only to create b.su from empty!\n");
+        exit(1);
+    }
+    const char *aname = argv[1];
+    const char *bname = argv[2];
+
     SUID_t su1, su2;
-    su_open(&su1, "shots.total.su", SU_READONLY);
+    su_open(&su1, aname, SU_READONLY);
     int ninst = su_ninst(su1);
     int nsamp = su_nsamp(su1, 0);
     printf("#ninst=%d nsamp=%d\n", ninst, nsamp);
@@ -35,7 +44,7 @@ int main()
         printf("group[%4d] %8d->%8d\n", i, first[i], 
             first[i]+nmemb[i]-1);
 
-    su_open(&su2, "shots.test3c.su", SU_CREATE);
+    su_open(&su2, bname, SU_CREATE);
     su_nsamp(su2, nsamp);
     for(int i=0; i<nshot; i++) {
         float   *v1 = calloc(nmemb[i], nsamp*sizeof(float));
@@ -58,5 +67,7 @@ int main()
     free(nmemb);
     su_close(su1);
     su_close(su2);
+
+    printf("# test-3c  success\n");
     return 0;
 }

@@ -22,8 +22,17 @@ if [ "$1" -eq 2 ] || [ "$1" -eq 0 ]; then
     ./test2.exe model_cp.su model_test2c.su
     ./test2.py model_cp.su model_test2py.su
 fi
-exit
-gcc $flags test3.c $links -o test3.exe 
-./test3.exe
-gcc $flags test4.c $links -o test4.exe 
 
+if [ "$1" -eq 3 ] || [ "$1" -eq 0 ]; then
+    echo "# compile-3"
+    gcc $flags test3.c $links -o test3.exe 
+    ./test3.exe shots.total.su shots.test3c.su
+    ./test3.py
+fi
+
+if [ "$1" -eq 4 ] || [ "$1" -eq 0 ]; then
+    echo "# compile-4"
+    gcc $flags test4.c $links -o test4.exe 
+    ./test4.exe model_cp.su model_test4c.su
+#    ./test4.py
+fi
