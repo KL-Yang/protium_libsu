@@ -2,15 +2,23 @@
 #include "../libsu.h"
 
 //create a su file from scratch and copy over
-int main()
+int main(int argc, char *argv[])
 {
+    if(argc<3) {
+        printf("Usage: cpy a.su b.su\n"
+               "    copy data only to create b.su from empty!\n");
+        exit(1);
+    }
+    const char *aname = argv[1];
+    const char *bname = argv[2];
+
     SUID_t su1, su2;
-    su_open(&su1, "model_cp.su", SU_READONLY);
+    su_open(&su1, aname, SU_READONLY);
     int ninst = su_ninst(su1);
     int nsamp = su_nsamp(su1, 0);
-    printf("ninst=%d, nsamp=%d\n", ninst, nsamp);
+    //printf("ninst=%d, nsamp=%d\n", ninst, nsamp);
 
-    su_open(&su2, "model_test2c.su", SU_CREATE);
+    su_open(&su2, bname, SU_CREATE);
     su_nsamp(su2, nsamp);
 
     float *v1 = calloc(nsamp, sizeof(float));
@@ -31,6 +39,6 @@ int main()
     su_close(su1);
     su_close(su2);
 
-    printf("#Reach success!\n");
+    printf("# test-2c  success\n");
     return 0;
 }
