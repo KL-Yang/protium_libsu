@@ -17,7 +17,7 @@ int su_open(SUID_t *id, const char *path, int flag)
     su->attr  = calloc(su->nattr, sizeof(su_attr_t));
     su->names = calloc(su->nattr+1, sizeof(void*));
     memcpy(su->attr, default_su_attr, sizeof(default_su_attr));
-    i_su_names(su->attr, su->nattr, su->names);
+    su->xattr = i_su_names(su->attr, su->nattr, su->names);
     if(flag==SU_CREATE) {
         su->fid = open(path, O_RDWR|O_CREAT,
                 S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);

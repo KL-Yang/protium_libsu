@@ -35,6 +35,7 @@ typedef struct protium_suid_struct {
     int         skip;       //< trace skip
     su_attr_t * attr;
     int         nattr;
+    int         xattr;      //exposed attributes
     char     ** names;
 } protium_suid_t;
 

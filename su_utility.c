@@ -61,17 +61,22 @@ const su_attr_t default_su_attr[]={
     {.name="f2",     .db_type=PT_FLOAT, .ibyte=192, .su_type=SU_FLOAT},
     //for trace, nbyte is a place holder, always last item!
     {.name="trace",  .db_type=PT_FLOAT, .ibyte=240, .su_type=SU_FLOAT},
+    //dummy attribute, not counted in
     {.name="_head",  .db_type=PT_BYTE,  .ibyte=0,   .su_type=SU_BYTE} //dummy attribute
 };
 
-static void 
+static int
 i_su_names(const su_attr_t *attr, int nattr, char **names)
 {
-    for(int i=0; i<nattr; i++) {
-        names[i] = calloc(strlen(attr[i].name)+1, sizeof(char));
-        strcpy(names[i], attr[i].name);
+    int xattr=0;
+    for(int i=0; i<nattr; i++)
+        if(attr[i].name[0]!='_') {   //must at tail of the struct
+        names[xattr] = calloc(strlen(attr[i].name)+1, sizeof(char));
+        strcpy(names[xattr], attr[i].name);
+        xattr++;    //allow some hidden special attributes
     }
     names[nattr] = NULL;
+    return xattr;
 }
 
 static void i_su_names_free(char **names, int nattr)

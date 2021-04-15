@@ -2,7 +2,7 @@ const char **su_attrs(SUID_t id, int *nattr)
 {
     char **names = NULL;
     protium_suid_t *su = (protium_suid_t*)(id);
-    if(nattr) *nattr = su->nattr;
+    if(nattr) *nattr = su->xattr;
     names = su->names;
     return (const char **)names;
 }
